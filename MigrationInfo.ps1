@@ -105,7 +105,7 @@ Function Convert-OutputForCSV {
         [string]$OutputPropertyType = 'Stack'
     )
     Begin {
-        $PSBoundParameters.GetEnumerator() | ForEach {
+        $PSBoundParameters.GetEnumerator() | ForEach-Object {
             Write-Verbose "$($_)"
         }
         $FirstRun = $True
@@ -129,12 +129,12 @@ Function Convert-OutputForCSV {
             Write-Verbose "Properties Found that have no collections:`n $(($Properties_NoCollection) -join ', ')"
         }
  
-        $InputObject | ForEach {
+        $InputObject | ForEach-Object {
             $Line = $_
             $stringBuilder = New-Object Text.StringBuilder
             $Null = $stringBuilder.AppendLine("[pscustomobject] @{")
 
-            $OutputOrder | ForEach {
+            $OutputOrder | ForEach-Object {
                 If ($OutputPropertyType -eq 'Stack') {
                     $Null = $stringBuilder.AppendLine("`"$($_)`" = `"$(($line.$($_) | Out-String).Trim())`"")
                 } ElseIf ($OutputPropertyType -eq "Comma") {
@@ -175,7 +175,7 @@ Foreach ($Server in (Get-Content C:\temp\Output1\Online.txt))
         #to find local groups
         $Computer = $Server
         $Computer = [ADSI]"WinNT://$Computer"
-        $Localgroups=($Computer.psbase.Children | Where {$_.psbase.schemaClassName -eq "group"}).name
+        $Localgroups=($Computer.psbase.Children | Where-Object {$_.psbase.schemaClassName -eq "group"}).name
                         
         #$Localgroups= (Get-WMIObject win32_group -filter "LocalAccount='True'" -ComputerName $Server).Name
         #$Localgroups.trimend()
@@ -318,7 +318,7 @@ Function Convert-OutputForCSV {
         [string]$OutputPropertyType = 'Stack'
     )
     Begin {
-        $PSBoundParameters.GetEnumerator() | ForEach {
+        $PSBoundParameters.GetEnumerator() | ForEach-Object {
             Write-Verbose "$($_)"
         }
         $FirstRun = $True
@@ -342,12 +342,12 @@ Function Convert-OutputForCSV {
             Write-Verbose "Properties Found that have no collections:`n $(($Properties_NoCollection) -join ', ')"
         }
  
-        $InputObject | ForEach {
+        $InputObject | ForEach-Object {
             $Line = $_
             $stringBuilder = New-Object Text.StringBuilder
             $Null = $stringBuilder.AppendLine("[pscustomobject] @{")
 
-            $OutputOrder | ForEach {
+            $OutputOrder | ForEach-Object {
                 If ($OutputPropertyType -eq 'Stack') {
                     $Null = $stringBuilder.AppendLine("`"$($_)`" = `"$(($line.$($_) | Out-String).Trim())`"")
                 } ElseIf ($OutputPropertyType -eq "Comma") {
@@ -388,7 +388,7 @@ Foreach ($Server in (Get-Content C:\temp\Output1\Online.txt))
         #to find local groups
         $Computer = $Server
         $Computer = [ADSI]"WinNT://$Computer"
-        $Localgroups=($Computer.psbase.Children | Where {$_.psbase.schemaClassName -eq "group"}).name
+        $Localgroups=($Computer.psbase.Children | Where-Object {$_.psbase.schemaClassName -eq "group"}).name
                         
         #$Localgroups= (Get-WMIObject win32_group -filter "LocalAccount='True'" -ComputerName $Server).Name
         #$Localgroups.trimend()
@@ -477,7 +477,7 @@ Foreach ($computer in $computers11) {
  
     #Check if username exists   
     Try {
-        $users = $comp.psbase.children | select -expand name
+        $users = $comp.psbase.children | Select-Object -expand name
         if ($users -like $username) {
             Write-Host "$username already exists on $computer"
  
@@ -501,7 +501,7 @@ Foreach ($computer in $computers11) {
             $group.add("WinNT://$computer/$username")
  
                 #Validate whether user account has been created or not
-                $users = $comp.psbase.children | select -expand name
+                $users = $comp.psbase.children | Select-Object -expand name
                 if ($users -like $username) {
                     Write-Host "$username has been created on $computer"
                 } else {
