@@ -2,5 +2,3 @@
 {
 Get–aduser $User | set-aduser –changepasswordatlogon $false
 }
-
-Write-Host
