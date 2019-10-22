@@ -8,7 +8,7 @@ Foreach ($Server in $ServerPath)
         #to find local groups
         $Computer = $Server
         $Computer = [ADSI]"WinNT://$Computer"
-        $Localgroups=($Computer.psbase.Children | Where {$_.psbase.schemaClassName -eq "group"}).name
+        $Localgroups=($Computer.psbase.Children | Where-Object {$_.psbase.schemaClassName -eq "group"}).name
                         
         #$Localgroups= (Get-WMIObject win32_group -filter "LocalAccount='True'" -ComputerName $Server).Name
         #$Localgroups.trimend()
