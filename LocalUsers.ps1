@@ -1,9 +1,9 @@
 ﻿$computers = get-content "C:\Temp\Powershell\Servers.txt"
-$computers | foreach {
+$computers | ForEach-Object {
 $computername = $_
 [ADSI]$S = "WinNT://$computername"
 $S.children.where({$_.class -eq 'group'}) |
-Select @{Name="Computername";Expression={$_.Parent.split("/")[-1] }},
+Select-Object @{Name="Computername";Expression={$_.Parent.split("/")[-1] }},
 @{Name="Name";Expression={$_.name.value}},
 @{Name="Members";Expression={
 [ADSI]$group = "$($_.Parent)/$($_.Name),group"
