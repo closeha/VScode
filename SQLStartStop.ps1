@@ -3,7 +3,7 @@
      param (
            [string]$Title = 'SQL Server Service Stop\Start Script'
      )
-     cls
+     Clear-Host
      Write-Host "================ $Title - $Server ================"
     
      Write-Host "1: Press '1' to stop SQL services."
@@ -26,7 +26,7 @@ do
      switch ($input)
      {
            '1' {
-                cls
+                Clear-Host
                 'The services are being stopped.'
                 Get-service -ComputerName $Server *SQL* | Where-Object {$_.status -eq   "Running"}
                 Foreach ($Service in $Services)
@@ -39,7 +39,7 @@ do
                 
 
            } '2' {
-                cls
+                Clear-Host
                 'The services are being started.'
                 Get-service -ComputerName $Server *SQL* | Where-Object {$_.status -eq   "Stopped"}
 
@@ -54,14 +54,14 @@ do
                 
                    
            } '3' {
-                cls
+                Clear-Host
                 Get-service -ComputerName $Server *SQL* | Where-Object {$_.status -eq   "Running"}
                 
                 Get-service -ComputerName $Server MsDtsServer120 | Select-Object Name,Status,Starttype,Displayname
                 Get-service -ComputerName $Server ReportServer | Select-Object Name,Status,Starttype,Displayname
 
            } '4' {
-                cls
+                Clear-Host
                 'The Startuptypes are being changed.'
                                 
                 Foreach ($Service in $Services)
@@ -73,7 +73,7 @@ do
                 
                    
            } '5' {
-                cls
+                Clear-Host
                 'The StartupTypes are being changed.'
 
                 Foreach ($Service in $Services)

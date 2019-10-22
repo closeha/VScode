@@ -7,7 +7,7 @@ $SearchLog1 = New-Item "c:\temp\DNSChange\$ThisSite\DNSSuccess.txt" -type file -
 ForEach($Srv in $computer) {
 Try{
 
-  $NICs = Get-WMIObject Win32_NetworkAdapterConfiguration -computername $Srv |where{$_.IPEnabled -eq “TRUE”}
+  $NICs = Get-WMIObject Win32_NetworkAdapterConfiguration -computername $Srv |Where-Object{$_.IPEnabled -eq “TRUE”}
        }
   Catch{
        Add-Content -Path $SearchLog -Value "$(Get-Date -Format dd-MM-yy-hh_mm_ss) $Srv had an issue with the DNS change: $_.Exception.Message`n"     
